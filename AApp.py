@@ -6,7 +6,7 @@ st.set_page_config(page_title="Sales Intelligence Dashboard", layout="wide")
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("SALES(2025-01--2025-12)Detailed.csv", low_memory=False)
+    df = pd.read_parquet("sales.parquet")
     df["InvoiceDate"] = pd.to_datetime(df["InvoiceDate"], errors="coerce")
     df["ValueNp"] = pd.to_numeric(df["ValueNp"], errors="coerce")
     return df
@@ -63,3 +63,4 @@ monthly["InvoiceDate"] = monthly["InvoiceDate"].astype(str)
 
 fig4 = px.line(monthly, x="InvoiceDate", y="ValueNp", markers=True)
 st.plotly_chart(fig4, use_container_width=True)
+
